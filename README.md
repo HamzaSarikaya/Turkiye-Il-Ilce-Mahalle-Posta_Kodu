@@ -1,7 +1,8 @@
-# turkiye-adres
+# Türkiye İl İlçe Mahalle Posta Kodu (`turkiye-adres`)
 
-Türkiye için **il → ilçe → mahalle / köy → posta kodu** sorguları. Bağımlılıksız, küçük bir JavaScript kütüphanesi (Node.js ve tarayıcı) ve
-PTT'nin sayfasından kendi verinizi üreten betikler. Kod **MIT** lisanslıdır.
+**Türkiye il, ilçe, mahalle, köy ve posta kodu** kütüphanesi: 81 il, 973 ilçe, adres formları için açılır liste (dropdown / select) ve posta kodu
+sorgulama. Bağımlılıksız, küçük bir JavaScript kütüphanesi (Node.js ve tarayıcı, TypeScript tipleriyle) ve PTT'nin sayfasından kendi
+verinizi üreten betikler. Kod **MIT** lisanslıdır.
 
 > **Önemli: mahalle ve posta kodu verisi bu depoda yok.** PTT'nin Yasal Uyarısı, sitesindeki bilgilerin izinsiz kopyalanmasını ve dağıtılmasını
 > yasaklıyor; bu yüzden o liste buraya konmaz. Betikle kendi bilgisayarınızda üretirsiniz (aşağıda "Veri"). 81 il ve 973 ilçe adı depoda hazır gelir.
@@ -20,8 +21,8 @@ the neighbourhood/postal-code data yourself from PTT's public lookup page. Code 
 ## Hızlı başlangıç (il ve ilçe — veri gerekmez)
 
 ```bash
-git clone https://github.com/HamzaSarikaya/turkiye-adres.git
-cd turkiye-adres
+git clone https://github.com/HamzaSarikaya/Turkiye-Il-Ilce-Mahalle-Posta_Kodu.git
+cd Turkiye-Il-Ilce-Mahalle-Posta_Kodu
 ```
 
 ```js

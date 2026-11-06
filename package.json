@@ -19,6 +19,8 @@
     "test": "node --test \"tests/*.test.mjs\""
   },
   "engines": { "node": ">=20" },
-  "keywords": ["turkiye", "turkey", "il", "ilce", "mahalle", "posta-kodu", "postal-code", "adres", "address"],
-  "repository": { "type": "git", "url": "git+https://github.com/HamzaSarikaya/turkiye-adres.git" }
+  "keywords": ["turkiye", "turkey", "turkish", "il", "ilce", "mahalle", "koy", "posta-kodu", "postal-code", "zip-code", "adres", "address", "provinces", "districts", "neighborhoods", "ptt"],
+  "repository": { "type": "git", "url": "git+https://github.com/HamzaSarikaya/Turkiye-Il-Ilce-Mahalle-Posta_Kodu.git" },
+  "homepage": "https://github.com/HamzaSarikaya/Turkiye-Il-Ilce-Mahalle-Posta_Kodu#readme",
+  "bugs": { "url": "https://github.com/HamzaSarikaya/Turkiye-Il-Ilce-Mahalle-Posta_Kodu/issues" }
 }
