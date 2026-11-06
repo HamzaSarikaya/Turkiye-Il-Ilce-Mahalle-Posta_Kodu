@@ -1,0 +1,5 @@
+# PTT'den çekilen veri bu depoya KONMAZ (PTT'nin yasal uyarısı: izinsiz çoğaltma ve dağıtım yasak). README "Veri" bölümüne bakın.
+data/ham/
+data/places/
+node_modules/
+*.log

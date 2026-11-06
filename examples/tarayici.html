@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>İl / İlçe / Mahalle örneği</title>
+  <style>
+    body { font: 16px system-ui, sans-serif; max-width: 28rem; margin: 2rem auto; padding: 0 1rem; }
+    label { display: block; margin: 1rem 0 .25rem; font-weight: 600; }
+    select, input { width: 100%; padding: .5rem; font: inherit; }
+    p { color: #555; }
+  </style>
+</head>
+<body>
+  <h1>Adres seçimi</h1>
+  <p>Bu sayfayı proje klasöründen sunun (<code>npx serve .</code>) ve <code>/examples/tarayici.html</code> adresini açın. Mahalle verisi için önce <code>npm run build</code> çalıştırılmış olmalı.</p>
+
+  <label for="il">İl</label>
+  <select id="il"><option value="">İl seçin</option></select>
+  <label for="ilce">İlçe</label>
+  <select id="ilce" disabled><option value="">Önce il seçin</option></select>
+  <label for="mahalle">Mahalle / Köy</label>
+  <select id="mahalle" disabled><option value="">Önce ilçe seçin</option></select>
+  <label for="kod">Posta kodu</label>
+  <input id="kod" readonly>
+
+  <script type="module">
+    import { createAddressClient } from '../src/browser.js'
+
+    const address = createAddressClient({ baseUrl: '../data/' })
+    const il = document.getElementById('il')
+    const ilce = document.getElementById('ilce')
+    const mahalle = document.getElementById('mahalle')
+    const kod = document.getElementById('kod')
+
+    const fill = (select, placeholder, items) => {
+      select.replaceChildren(new Option(placeholder, ''), ...items.map(([label, value]) => new Option(label, value)))
+      select.disabled = items.length === 0
+    }
+
+    // Büyük üç il en üste (İstanbul, Ankara, İzmir), sonra alfabetik: kendi sıralamanızı burada yapabilirsiniz.
+    const first = ['İstanbul', 'Ankara', 'İzmir']
+    const all = await address.provinces()
+    const sorted = [...all.filter((p) => first.includes(p.name)).sort((a, b) => first.indexOf(a.name) - first.indexOf(b.name)),
+      ...all.filter((p) => !first.includes(p.name)).sort((a, b) => a.name.localeCompare(b.name, 'tr'))]
+    fill(il, 'İl seçin', sorted.map((p) => [p.name, p.plate]))
+
+    il.addEventListener('change', async () => {
+      kod.value = ''
+      fill(mahalle, 'Önce ilçe seçin', [])
+      const list = il.value ? await address.districts(il.value) : []
+      fill(ilce, 'İlçe seçin', (list ?? []).map((name) => [name, name]))
+    })
+    ilce.addEventListener('change', async () => {
+      kod.value = ''
+      if (!ilce.value) return fill(mahalle, 'Önce ilçe seçin', [])
+      try {
+        const list = (await address.places(il.value, ilce.value)) ?? []
+        fill(mahalle, 'Mahalle veya köy seçin', list.map((p) => [p.name, p.name]))
+        mahalle.postal = new Map(list.map((p) => [p.name, p.postalCode ?? '']))
+      } catch (error) {
+        fill(mahalle, 'Mahalle verisi bulunamadı (README: Veri)', [])
+        console.error(error)
+      }
+    })
+    mahalle.addEventListener('change', () => { kod.value = mahalle.postal?.get(mahalle.value) ?? '' })
+  </script>
+</body>
+</html>
